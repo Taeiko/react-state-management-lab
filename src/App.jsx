@@ -1,8 +1,7 @@
-
-import {useState} from 'react'
+import { useState } from "react";
 const App = () => {
-  const [team, setTeam] = useState ([])
-  const [ money, setMoney] = useState(100)
+  const [team, setTeam] = useState([]);
+  const [money, setMoney] = useState(100);
   const zombieFighters = [
     {
       id: 1,
@@ -83,16 +82,23 @@ const App = () => {
       strength: 7,
       agility: 6,
       img: "https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/e41f26.png",
-    },
-  ]
-  function handleAddFighter (fighter) {
-    if (money < fighter.price){
-      console.log("damn man you broke asl")
     }
-    setMoney(currentMoney => currentMoney - fighter.price)
-  setTeam(oldTeam => [...oldTeam, fighter])
-  const updatedTeam = zombieFighters.filter(fighter => fighter.id)
-  setFighterTeam(updatedTeam)
+  ]
+  function handleAddFighter(fighter) {
+    if (money < fighter.price) {
+      console.log("damn man you broke asl")
+      return
+    }
+
+    setMoney((currentMoney) => currentMoney - fighter.price)
+    setTeam((oldTeam) => [...oldTeam, fighter])
+    const updatedTeam = zombieFighters.filter((fighter) => fighter.id)
+    setFighterTeam(updatedTeam)
+  }
+  function handleRemoveFighter (fighter){
+    setTeam(currentTeam => currentTeam.filter(fighter => fighter.id !==fighter.id))
+    setFighterTeam(currentTeam => [...currentTeam, fighter])
+    setMoney(currentMoney => currentMoney + fighter.price)
   }
   return (
     <>
@@ -100,14 +106,17 @@ const App = () => {
       <h3>money: {money}</h3>
       <ol>
         {zombieFighters.map((fighter) => {
-          return <li key={fighter.id}>
-            <p>{fighter.name}</p>
-            <p>Price: {fighter.price}</p>
-            <p>Strength: {fighter.strength}</p>
-            <p>Agility:{fighter.agility}</p>
-            <button onClick={() => handleAddFighter(fighter)}>Add</button>
-            </li>;
-        })}
+          return (
+            <li key={fighter.id}>
+              <p>{fighter.name}</p>
+              <p>Price: {fighter.price}</p>
+              <p>Strength: {fighter.strength}</p>
+              <p>Agility:{fighter.agility}</p>
+              <button onClick={() => handleAddFighter(fighter)}>Add</button>
+            </li>
+          );
+        }
+        )}
       </ol>
     </>
   );
